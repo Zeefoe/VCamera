@@ -16,6 +16,14 @@ jobs:
         java-version: 8.0.302+8
         distribution: 'adopt'
 
+    - name: Cache Gradle Wrapper
+      uses: actions/cache@v3
+      with:
+        path: ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-wrapper-${{ hashFiles('**/**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-wrapper-
+
     - name: Build Android app
       run: |
         chmod +x ./gradlew
