@@ -1,0 +1,30 @@
+name: Build Android App (No Signing)
+
+on:
+  push:
+    branches: [ master ]  
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: 11  
+
+      - name: Grant Gradlew permissions
+        run: chmod +x gradlew
+
+      - name: Build the App (Unsigned)
+        run: ./gradlew assembleDebug  
+
+      - name: Upload App as Artifact (Optional)
+        uses: actions/upload-artifact@v3
+        with:
+          name: debug-apk  # Change the name as needed
+          path: app/build/outputs/apk/debug/app-debug.apk  
+
